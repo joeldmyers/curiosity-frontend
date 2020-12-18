@@ -27,7 +27,11 @@ import {
  */
 class InventorySubscriptions extends React.Component {
   componentDidMount() {
-    this.onUpdateInventoryData();
+    try {
+      this.onUpdateInventoryData();
+    } catch (e) {
+      console.log('error here', e);
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -104,8 +108,11 @@ class InventorySubscriptions extends React.Component {
           updatedQuery[RHSM_API_QUERY_TYPES.DIRECTION] = sortDefaultInitialDirection;
         }
       }
-
-      getSubscriptionsInventory(productId, updatedQuery);
+      try {
+        getSubscriptionsInventory(productId, updatedQuery);
+      } catch (e) {
+        console.log('error getting subscriptions inventory', e);
+      }
     }
   };
 

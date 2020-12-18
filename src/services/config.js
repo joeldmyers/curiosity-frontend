@@ -28,9 +28,12 @@ const cancelTokens = {};
  * @returns {Promise<*>}
  */
 const serviceCall = async config => {
-  await platformServices.getUser();
+  const userData = await platformServices.getUser();
+  console.log('user data', userData);
 
   const updatedConfig = { ...config };
+  console.log('test', updatedConfig);
+
   const cancelTokensId = `${updatedConfig.cancelId || ''}-${updatedConfig.url}`;
 
   if (updatedConfig.cancel === true) {
@@ -43,8 +46,14 @@ const serviceCall = async config => {
 
     delete updatedConfig.cancel;
   }
-
-  return axios(serviceConfig(updatedConfig));
+  console.log('service config', serviceConfig);
+  try {
+    const response = await axios(serviceConfig(updatedConfig));
+    return response;
+  } catch (e) {
+    console.log('error with service call', e);
+    return;
+  }
 };
 
 const config = { serviceCall, serviceConfig };

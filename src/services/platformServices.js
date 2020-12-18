@@ -28,7 +28,7 @@ const getUser = async () => {
       (await insights.chrome.auth.getUser())
     );
   } catch (e) {
-    throw new Error(`{ getUser } = insights.chrome.auth, ${e.message}`);
+    throw new Error(`{ getUser } = insights.chrome.auth, ${e.message}`, e);
   }
 };
 
@@ -114,6 +114,7 @@ const onNavigation = callback => {
  */
 const setAppName = async (name = null) => {
   const { insights } = window;
+  console.log('in app name', name);
   try {
     await insights.chrome.identifyApp(name);
   } catch (e) {

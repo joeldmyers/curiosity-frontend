@@ -11,6 +11,7 @@ import { helpers } from '../common';
  * @returns {Promise<{data: {permissions: (void|*[]), user: void}, message: string, status: number}>}
  */
 const authorizeUser = async () => {
+  console.log('hitting authorize user');
   let message = '{ auth.getUser, getUserPermissions } = insights.chrome';
   let userData;
   let userPermissions;
@@ -18,6 +19,7 @@ const authorizeUser = async () => {
   try {
     userData = await getUser();
     userPermissions = await getUserPermissions();
+    console.log('in here', userData, userPermissions);
   } catch (e) {
     message = e.message;
   }

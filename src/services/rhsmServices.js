@@ -1357,14 +1357,26 @@ const getHostsInventoryGuests = (id, params = {}, options = {}) => {
  * @param {string} options.cancelId
  * @returns {Promise<*>}
  */
-const getSubscriptionsInventory = (id, params = {}, options = {}) => {
+const getSubscriptionsInventory = async (id, params = {}, options = {}) => {
   const { cancel = true, cancelId } = options;
-  return serviceCall({
-    url: `${process.env.REACT_APP_SERVICES_RHSM_INVENTORY_SUBSCRIPTIONS}${id}`,
-    params,
-    cancel,
-    cancelId
-  });
+  console.log('HERE!', id, params, options);
+  try {
+    const response = await serviceCall({
+      url: `${process.env.REACT_APP_SERVICES_RHSM_INVENTORY_SUBSCRIPTIONS}${id}`,
+      params,
+      cancel,
+      cancelId,
+      headers: {
+        'x-rh-identity':
+          'eyJpZGVudGl0eSI6eyJhY2NvdW50X251bWJlciI6ImFjY291bnQxMjMiLCJ0eXBlIjoiVXNlciIsInVzZXIiOnsiaXNfb3JnX2FkbWluIjp0cnVlfSwiaW50ZXJuYWwiOnsib3JnX2lkIjoib3JnMTIzIn19fQo='
+      }
+    });
+
+    return response;
+  } catch (e) {
+    console.log('error here', e);
+    return;
+  }
 };
 
 const rhsmServices = {
